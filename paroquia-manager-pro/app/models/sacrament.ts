@@ -1,11 +1,7 @@
 // app/models/sacrament.ts
 import { DateTime } from 'luxon'
-import {
-  BaseModel,
-  column,
-  belongsTo,
-  BelongsTo,
-} from '@adonisjs/lucid/orm'
+import { BaseModel, column, belongsTo } from '@adonisjs/lucid/orm'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import Member from './member.js'
 import User from './user.js'
 

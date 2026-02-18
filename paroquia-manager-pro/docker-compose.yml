@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3333:3333"
+    environment:
+      - NODE_ENV=development
+      - PORT=3333
+      - HOST=0.0.0.0
+      - DB_CONNECTION=pg
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=adonis
+      - DB_PASSWORD=secret
+      - DB_DATABASE=paroquia_manager
+      - APP_KEY=your_secret_key_here
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=adonis
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=paroquia_manager
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

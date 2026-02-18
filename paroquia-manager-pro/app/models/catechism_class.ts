@@ -1,16 +1,10 @@
 // app/models/catechism_class.ts
 import { DateTime } from 'luxon'
-import {
-  BaseModel,
-  column,
-  belongsTo,
-  hasMany,
-  BelongsTo,
-  HasMany,
-} from '@adonisjs/lucid/orm'
+import { BaseModel, column, belongsTo, hasMany } from '@adonisjs/lucid/orm'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import User from './user.js'
-import CatechismEnrollment from './cathecism_enrollement.js'
-import Attendance from './attendence.js'
+import CatechismEnrollment from './catechism_enrollment.js'
+import Attendance from './attendance.js'
 
 export default class CatechismClass extends BaseModel {
   @column({ isPrimary: true })

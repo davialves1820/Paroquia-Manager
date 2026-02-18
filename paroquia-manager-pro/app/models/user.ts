@@ -1,13 +1,14 @@
 import Sacrament from './sacrament.js'
-import CatechismClass from './cathecism_class.js'
+import CatechismClass from './catechism_class.js'
 import Notification from './notification.js'
 import { DateTime } from 'luxon'
 import hash from '@adonisjs/core/services/hash'
 import { compose } from '@adonisjs/core/helpers'
-import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
+import { BaseModel, column, hasMany, manyToMany } from '@adonisjs/lucid/orm'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
-import { HasMany } from '@adonisjs/lucid/types/relations'
+import type { HasMany, ManyToMany } from '@adonisjs/lucid/types/relations'
+import Pastoral from './pastoral.js'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -19,6 +20,7 @@ export type UserRole =
   | 'PADRE'
   | 'SECRETARIA'
   | 'COORDENADOR'
+  | 'FIEL'
 
 export default class User extends compose(BaseModel, AuthFinder) {
   @column({ isPrimary: true })
@@ -42,7 +44,6 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
 
-  
 
   // 🔁 RELACIONAMENTOS
 
@@ -58,6 +59,11 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
   @hasMany(() => Notification)
   declare notifications: HasMany<typeof Notification>
+
+  @manyToMany(() => Pastoral, {
+    pivotTable: 'pastoral_users',
+  })
+  declare pastorals: ManyToMany<typeof Pastoral>
 
   static accessTokens = DbAccessTokensProvider.forModel(User)
 }

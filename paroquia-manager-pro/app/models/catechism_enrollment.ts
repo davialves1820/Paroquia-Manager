@@ -1,15 +1,11 @@
-// app/models/attendance.ts
+// app/models/catechism_enrollment.ts
 import { DateTime } from 'luxon'
-import {
-  BaseModel,
-  column,
-  belongsTo,
-  BelongsTo,
-} from '@adonisjs/lucid/orm'
-import CatechismClass from './cathecism_class.js'
+import { BaseModel, column, belongsTo } from '@adonisjs/lucid/orm'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import CatechismClass from './catechism_class.js'
 import Member from './member.js'
 
-export default class Attendance extends BaseModel {
+export default class CatechismEnrollment extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
@@ -19,14 +15,8 @@ export default class Attendance extends BaseModel {
   @column()
   declare memberId: number
 
-  @column.date()
-  declare date: DateTime
-
-  @column()
-  declare present: boolean
-
   @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
+  declare enrolledAt: DateTime
 
   // 🔁 RELACIONAMENTOS
 
