@@ -1,16 +1,19 @@
-// app/models/member.ts
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany, manyToMany } from '@adonisjs/lucid/orm'
-import type { HasMany, ManyToMany } from '@adonisjs/lucid/types/relations'
+import { BaseModel, column, hasMany, manyToMany, belongsTo } from '@adonisjs/lucid/orm'
+import type { HasMany, ManyToMany, BelongsTo } from '@adonisjs/lucid/types/relations'
 import Donation from './donation.js'
 import Sacrament from './sacrament.js'
 import CatechismEnrollment from './catechism_enrollment.js'
 import Attendance from './attendance.js'
 import Pastoral from './pastoral.js'
+import User from './user.js'
 
 export default class Member extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
+
+  @column()
+  declare userId: number | null
 
   @column()
   declare name: string
@@ -57,4 +60,7 @@ export default class Member extends BaseModel {
     pivotTable: 'pastoral_members',
   })
   declare pastorals: ManyToMany<typeof Pastoral>
+
+  @belongsTo(() => User)
+  declare user: BelongsTo<typeof User>
 }

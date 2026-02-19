@@ -11,6 +11,8 @@ const ReportController = () => import('#controllers/report_controller')
 const NotificationController = () => import('#controllers/notification_controller')
 const UsersController = () => import('#controllers/users_controller')
 const PastoralsController = () => import('#controllers/pastorals_controller')
+const PastoralEventsController = () => import('#controllers/pastoral_events_controller')
+const PastoralNoticesController = () => import('#controllers/pastoral_notices_controller')
 
 router.get('/', async () => {
   return { hello: 'Paróquia Manager Pro API' }
@@ -74,6 +76,16 @@ router.group(() => {
   router.delete('pastorals/:id/members', [PastoralsController, 'removeMember'])
   router.post('pastorals/:id/coordinators', [PastoralsController, 'addCoordinator'])
   router.delete('pastorals/:id/coordinators', [PastoralsController, 'removeCoordinator'])
+
+  // PASTORAL EVENTS
+  router.get('pastorals/:id/events', [PastoralEventsController, 'index'])
+  router.post('pastorals/:id/events', [PastoralEventsController, 'store'])
+  router.put('events/:id', [PastoralEventsController, 'update'])
+  router.delete('events/:id', [PastoralEventsController, 'destroy'])
+
+  // ANNOUNCEMENTS (AVISOS)
+  router.post('pastorals/:id/announcements', [PastoralNoticesController, 'sendToPastoral'])
+  router.post('announcements/all', [PastoralNoticesController, 'sendToAll'])
 
   // NOTIFICATIONS
   router.group(() => {

@@ -1,8 +1,9 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, manyToMany } from '@adonisjs/lucid/orm'
-import type { ManyToMany } from '@adonisjs/lucid/types/relations'
+import { BaseModel, column, manyToMany, hasMany } from '@adonisjs/lucid/orm'
+import type { ManyToMany, HasMany } from '@adonisjs/lucid/types/relations'
 import Member from './member.js'
 import User from './user.js'
+import PastoralEvent from './pastoral_event.js'
 
 export default class Pastoral extends BaseModel {
   @column({ isPrimary: true })
@@ -29,4 +30,7 @@ export default class Pastoral extends BaseModel {
     pivotTable: 'pastoral_users',
   })
   declare coordinators: ManyToMany<typeof User>
+
+  @hasMany(() => PastoralEvent)
+  declare events: HasMany<typeof PastoralEvent>
 }

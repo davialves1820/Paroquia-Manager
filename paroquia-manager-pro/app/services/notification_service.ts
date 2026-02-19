@@ -1,4 +1,7 @@
 import Notification from '#models/notification'
+import User from '#models/user'
+import Member from '#models/member'
+import Pastoral from '#models/pastoral'
 
 export default class NotificationService {
     async create(data: { userId: number; title: string; message: string }) {
@@ -28,5 +31,37 @@ export default class NotificationService {
             .count('* as total')
 
         return Number(counts[0].$extras.total)
+    }
+
+    async sendToPastoral(pastoralId: number, title: string, message: string) {
+        const pastoral = await Pastoral.query()
+            .where('id', pastoralId)
+            .preload('members')
+            .firstOrFail()
+
+        const notifications = pastoral.members
+            .filter(member => member.userId)
+            .map(member => ({
+                userId: member.userId!,
+                title,
+                message,
+                read: false
+            }))
+
+        if (notifications.length > 0) {
+            await Notification.createMany(notifications)
+        }
+    }
+
+    async sendToAll(title: string, message: string) {
+        const users = await User.all()
+        const notifications = users.map(user => ({
+            userId: user.id,
+            title,
+            message,
+            read: false
+        }))
+
+        await Notification.createMany(notifications)
     }
 }
