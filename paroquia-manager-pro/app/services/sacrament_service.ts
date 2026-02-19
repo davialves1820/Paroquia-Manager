@@ -75,4 +75,38 @@ export default class SacramentService {
             stream.on('error', (err) => reject(err))
         })
     }
+
+    async update(id: number, data: any) {
+        const sacrament = await Sacrament.findOrFail(id)
+        sacrament.merge(data)
+        await sacrament.save()
+
+        // Recalcula o certificado se necessário (se data, tipo ou membro mudaram)
+        // Por simplificação, vamos regenerar se houver mudança
+        await sacrament.load('member')
+        await sacrament.load('priest')
+        const pdfUrl = await this.generateCertificate(sacrament)
+        sacrament.certificateUrl = pdfUrl
+        await sacrament.save()
+
+        return sacrament
+    }
+
+    async getAgenda(priestId: number, date?: string) {
+        const query = Sacrament.query()
+            .where('priestId', priestId)
+            .preload('member')
+            .preload('priest')
+
+        if (date) {
+            query.where('date', date)
+        }
+
+        return await query.orderBy('date', 'asc')
+    }
+
+    async delete(id: number) {
+        const sacrament = await Sacrament.findOrFail(id)
+        await sacrament.delete()
+    }
 }

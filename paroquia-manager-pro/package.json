@@ -58,6 +58,7 @@
     "@adonisjs/cors": "^2.2.1",
     "@adonisjs/lucid": "^21.6.1",
     "@vinejs/vine": "^3.0.1",
+    "adonis-autoswagger": "^3.73.0",
     "exceljs": "^4.4.0",
     "luxon": "^3.7.2",
     "pdfkit": "^0.17.2",

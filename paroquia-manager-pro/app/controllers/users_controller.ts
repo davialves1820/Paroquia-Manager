@@ -3,7 +3,9 @@ import User from '#models/user'
 
 export default class UsersController {
     /**
-     * List all users
+     * @index
+     * @description List all users
+     * @showSummary true
      */
     async index({ response }: HttpContext) {
         const users = await User.all()
@@ -11,7 +13,10 @@ export default class UsersController {
     }
 
     /**
-     * Display a single user
+     * @show
+     * @description Display a single user
+     * @showSummary true
+     * @paramPath id - User ID - Example: 1
      */
     async show({ params, response }: HttpContext) {
         const user = await User.findOrFail(params.id)
@@ -19,7 +24,10 @@ export default class UsersController {
     }
 
     /**
-     * Create a new user
+     * @store
+     * @description Create a new user
+     * @showSummary true
+     * @requestBody <User>
      */
     async store({ request, response }: HttpContext) {
         const data = request.only(['fullName', 'email', 'password'])
@@ -29,11 +37,27 @@ export default class UsersController {
     }
 
     /**
-     * Update user details
+     * @update
+     * @description Update user details
+     * @showSummary true
+     * @paramPath id - User ID - Example: 1
+     * @requestBody <User>
      */
-    async update({ params, request, response }: HttpContext) {
+    async update({ bouncer, params, request, response }: HttpContext) {
         const user = await User.findOrFail(params.id)
+
+        // Authorize the update behavior
+        if (await bouncer.with('UserPolicy').denies('update', user)) {
+            return response.forbidden({ error: 'You are not authorized to edit this user' })
+        }
+
         const data = request.only(['fullName', 'email', 'role'])
+
+        // Role validation
+        const validRoles = ['ADMIN', 'PADRE', 'SECRETARIA', 'COORDENADOR', 'FIEL']
+        if (data.role && !validRoles.includes(data.role)) {
+            return response.badRequest({ error: 'Invalid role assigned' })
+        }
 
         // Check if password is being updated
         const password = request.input('password')
@@ -47,10 +71,19 @@ export default class UsersController {
     }
 
     /**
-     * Delete a user
+     * @destroy
+     * @description Delete a user
+     * @showSummary true
+     * @paramPath id - User ID - Example: 1
      */
-    async destroy({ params, response }: HttpContext) {
+    async destroy({ bouncer, params, response }: HttpContext) {
         const user = await User.findOrFail(params.id)
+
+        // Authorize the delete behavior
+        if (await bouncer.with('UserPolicy').denies('delete', user)) {
+            return response.forbidden({ error: 'You are not authorized to delete this user' })
+        }
+
         await user.delete()
         return response.noContent()
     }
