@@ -3,6 +3,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, column, belongsTo } from '@adonisjs/lucid/orm'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import CatechismClass from './catechism_class.js'
+import PastoralEvent from './pastoral_event.js'
 import Member from './member.js'
 
 export default class Attendance extends BaseModel {
@@ -10,7 +11,10 @@ export default class Attendance extends BaseModel {
   declare id: number
 
   @column()
-  declare classId: number
+  declare classId: number | null
+
+  @column()
+  declare pastoralEventId: number | null
 
   @column()
   declare memberId: number
@@ -30,6 +34,11 @@ export default class Attendance extends BaseModel {
     foreignKey: 'classId',
   })
   declare catechismClass: BelongsTo<typeof CatechismClass>
+
+  @belongsTo(() => PastoralEvent, {
+    foreignKey: 'pastoralEventId',
+  })
+  declare pastoralEvent: BelongsTo<typeof PastoralEvent>
 
   @belongsTo(() => Member)
   declare member: BelongsTo<typeof Member>

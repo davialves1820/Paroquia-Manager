@@ -98,6 +98,7 @@ router.group(() => {
   router.post('pastorals/:id/events', [PastoralEventsController, 'store'])
   router.put('events/:id', [PastoralEventsController, 'update'])
   router.delete('events/:id', [PastoralEventsController, 'destroy'])
+  router.post('events/:eventId/attendance', [PastoralEventsController, 'attendance'])
 
   // ANNOUNCEMENTS (AVISOS)
   router.post('pastorals/:id/announcements', [PastoralNoticesController, 'sendToPastoral'])

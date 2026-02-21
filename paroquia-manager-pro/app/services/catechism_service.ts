@@ -2,8 +2,13 @@ import CatechismClass from '#models/catechism_class'
 import CatechismEnrollment from '#models/catechism_enrollment'
 import Attendance from '#models/attendance'
 import { DateTime } from 'luxon'
+import { inject } from '@adonisjs/core'
+import AttendanceService from './attendance_service.js'
 
+@inject()
 export default class CatechismService {
+    constructor(protected attendanceService: AttendanceService) { }
+
     async createClass(data: any) {
         return await CatechismClass.create(data)
     }
@@ -17,16 +22,7 @@ export default class CatechismService {
     }
 
     async markAttendance(data: { classId: number; memberId: number; date: string; present: boolean }) {
-        return await Attendance.updateOrCreate(
-            {
-                classId: data.classId,
-                memberId: data.memberId,
-                date: DateTime.fromISO(data.date).toISODate() as any,
-            },
-            {
-                present: data.present,
-            }
-        )
+        return this.attendanceService.markCatechismAttendance(data)
     }
 
     async getClassDetails(classId: number) {

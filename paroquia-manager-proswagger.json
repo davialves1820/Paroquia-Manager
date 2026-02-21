@@ -1,0 +1,1813 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Paróquia Manager Pro API",
+    "version": "1.0.0",
+    "description": "API Documentation for Paróquia Manager Pro"
+  },
+  "components": {
+    "responses": {
+      "Forbidden": {
+        "description": "Access token is missing or invalid"
+      },
+      "Accepted": {
+        "description": "The request was accepted"
+      },
+      "Created": {
+        "description": "The resource has been created"
+      },
+      "NotFound": {
+        "description": "The resource has been created"
+      },
+      "NotAcceptable": {
+        "description": "The resource has been created"
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "BasicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      },
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      }
+    },
+    "schemas": {
+      "Any": {
+        "description": "Any JSON object not defined as schema"
+      },
+      "PaginationMeta": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "number",
+            "example": 100,
+            "nullable": false
+          },
+          "page": {
+            "type": "number",
+            "example": 2,
+            "nullable": false
+          },
+          "perPage": {
+            "type": "number",
+            "example": 10,
+            "nullable": false
+          },
+          "currentPage": {
+            "type": "number",
+            "example": 3,
+            "nullable": false
+          },
+          "lastPage": {
+            "type": "number",
+            "example": 10,
+            "nullable": false
+          },
+          "firstPage": {
+            "type": "number",
+            "example": 1,
+            "nullable": false
+          },
+          "lastPageUrl": {
+            "type": "string",
+            "example": "/?page=10",
+            "nullable": false
+          },
+          "firstPageUrl": {
+            "type": "string",
+            "example": "/?page=1",
+            "nullable": false
+          },
+          "nextPageUrl": {
+            "type": "string",
+            "example": "/?page=6",
+            "nullable": false
+          },
+          "previousPageUrl": {
+            "type": "string",
+            "example": "/?page=5",
+            "nullable": false
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "route",
+        "description": "\n\n __ - ****",
+        "parameters": [],
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {}
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "summary": "Create register (store)",
+        "description": "Create a new user\n\n _app/controllers/users_controller.ts_ - **store**",
+        "parameters": [],
+        "tags": [
+          "REGISTER"
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
+          }
+        },
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "example": {}
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": " (login)",
+        "description": "\n\n _app/controllers/auth_controller.ts_ - **login**",
+        "parameters": [],
+        "tags": [
+          "LOGIN"
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {}
+            }
+          }
+        },
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "summary": " (logout)",
+        "description": "\n\n _app/controllers/auth_controller.ts_ - **logout**",
+        "parameters": [],
+        "tags": [
+          "LOGOUT"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "summary": " (me)",
+        "description": "\n\n _app/controllers/auth_controller.ts_ - **me**",
+        "parameters": [],
+        "tags": [
+          "ME"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      }
+    },
+    "/dashboard": {
+      "get": {
+        "summary": "Get a list of  (index)",
+        "description": "\n\n _app/controllers/dashboard_controller.ts_ - **index**",
+        "parameters": [],
+        "tags": [
+          ""
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      }
+    },
+    "/members": {
+      "get": {
+        "summary": "Get a list of  (index)",
+        "description": "\n\n _app/controllers/member_controller.ts_ - **index**",
+        "parameters": [],
+        "tags": [
+          ""
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create  (store)",
+        "description": "\n\n _app/controllers/member_controller.ts_ - **store**",
+        "parameters": [],
+        "tags": [
+          ""
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          }
+        }
+      }
+    },
+    "/members/{id}": {
+      "get": {
+        "summary": "Get a single instance of :id (show)",
+        "description": "\n\n _app/controllers/member_controller.ts_ - **show**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update :id (update)",
+        "description": "\n\n _app/controllers/member_controller.ts_ - **update**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete :id (destroy)",
+        "description": "\n\n _app/controllers/member_controller.ts_ - **destroy**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      }
+    },
+    "/donations": {
+      "get": {
+        "summary": "Get a list of  (index)",
+        "description": "\n\n _app/controllers/donation_controller.ts_ - **index**",
+        "parameters": [],
+        "tags": [
+          ""
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create  (store)",
+        "description": "\n\n _app/controllers/donation_controller.ts_ - **store**",
+        "parameters": [],
+        "tags": [
+          ""
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          }
+        }
+      }
+    },
+    "/sacraments": {
+      "get": {
+        "summary": "Get a list of  (index)",
+        "description": "List all sacraments\n\n _app/controllers/sacrament_controller.ts_ - **index**",
+        "parameters": [],
+        "tags": [
+          ""
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create  (store)",
+        "description": "Register a new sacrament\n\n _app/controllers/sacrament_controller.ts_ - **store**",
+        "parameters": [],
+        "tags": [
+          ""
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Sacrament"
+              },
+              "example": {}
+            }
+          }
+        }
+      }
+    },
+    "/sacraments/agenda/{priestId}": {
+      "get": {
+        "summary": " (agenda)",
+        "description": "View the priest's sacrament agenda\n\n _app/controllers/sacrament_controller.ts_ - **agenda**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "priestId",
+            "description": "Priest (User) ID",
+            "schema": {
+              "example": "",
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "date",
+            "description": "Specific date to filter (YYYY-MM-DD)",
+            "schema": {
+              "example": "",
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "tags": [
+          "AGENDA"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      }
+    },
+    "/sacraments/{id}": {
+      "get": {
+        "summary": "Get a single instance of :id (show)",
+        "description": "Display a single sacrament\n\n _app/controllers/sacrament_controller.ts_ - **show**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Sacrament ID",
+            "schema": {
+              "example": "",
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update :id (update)",
+        "description": "Update sacrament details\n\n _app/controllers/sacrament_controller.ts_ - **update**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Sacrament ID",
+            "schema": {
+              "example": "",
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Sacrament"
+              },
+              "example": {}
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete :id (destroy)",
+        "description": "Delete a sacrament\n\n _app/controllers/sacrament_controller.ts_ - **destroy**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Sacrament ID",
+            "schema": {
+              "example": "",
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      }
+    },
+    "/catechism/classes": {
+      "post": {
+        "summary": " (storeClass)",
+        "description": "\n\n _app/controllers/catechism_controller.ts_ - **storeClass**",
+        "parameters": [],
+        "tags": [
+          "CLASSES"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          }
+        }
+      }
+    },
+    "/catechism/classes/{id}": {
+      "get": {
+        "summary": "Get a single instance of classes (show)",
+        "description": "\n\n _app/controllers/catechism_controller.ts_ - **show**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "CLASSES"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      }
+    },
+    "/catechism/enroll": {
+      "post": {
+        "summary": " (enroll)",
+        "description": "\n\n _app/controllers/catechism_controller.ts_ - **enroll**",
+        "parameters": [],
+        "tags": [
+          "ENROLL"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          }
+        }
+      }
+    },
+    "/catechism/attendance": {
+      "post": {
+        "summary": " (attendance)",
+        "description": "\n\n _app/controllers/catechism_controller.ts_ - **attendance**",
+        "parameters": [],
+        "tags": [
+          "ATTENDANCE"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          }
+        }
+      }
+    },
+    "/catechism/classes/{classId}/members/{memberId}/frequency": {
+      "get": {
+        "summary": " (frequency)",
+        "description": "\n\n _app/controllers/catechism_controller.ts_ - **frequency**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "classId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "memberId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "CLASSES"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      }
+    },
+    "/reports/members": {
+      "get": {
+        "summary": " (members)",
+        "description": "\n\n _app/controllers/report_controller.ts_ - **members**",
+        "parameters": [],
+        "tags": [
+          "MEMBERS"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      }
+    },
+    "/reports/donations": {
+      "get": {
+        "summary": " (donations)",
+        "description": "\n\n _app/controllers/report_controller.ts_ - **donations**",
+        "parameters": [],
+        "tags": [
+          "DONATIONS"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      }
+    },
+    "/reports/sacraments": {
+      "get": {
+        "summary": " (sacraments)",
+        "description": "\n\n _app/controllers/report_controller.ts_ - **sacraments**",
+        "parameters": [],
+        "tags": [
+          "SACRAMENTS"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      }
+    },
+    "/pastorals": {
+      "get": {
+        "summary": "Get a list of  (index)",
+        "description": "List all pastorals\n\n _app/controllers/pastorals_controller.ts_ - **index**",
+        "parameters": [],
+        "tags": [
+          ""
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create  (store)",
+        "description": "Create a new pastoral\n\n _app/controllers/pastorals_controller.ts_ - **store**",
+        "parameters": [],
+        "tags": [
+          ""
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pastoral"
+              },
+              "example": {}
+            }
+          }
+        }
+      }
+    },
+    "/pastorals/{id}": {
+      "get": {
+        "summary": "Get a single instance of :id (show)",
+        "description": "Display a single pastoral\n\n _app/controllers/pastorals_controller.ts_ - **show**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Pastoral ID",
+            "schema": {
+              "example": "",
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update :id (update)",
+        "description": "Update pastoral details\n\n _app/controllers/pastorals_controller.ts_ - **update**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Pastoral ID",
+            "schema": {
+              "example": "",
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pastoral"
+              },
+              "example": {}
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete :id (destroy)",
+        "description": "Delete a pastoral\n\n _app/controllers/pastorals_controller.ts_ - **destroy**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Pastoral ID",
+            "schema": {
+              "example": "",
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      }
+    },
+    "/pastorals/{id}/members": {
+      "post": {
+        "summary": " (addMember)",
+        "description": "Add a member to a pastoral\n\n _app/controllers/pastorals_controller.ts_ - **addMember**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Pastoral ID",
+            "schema": {
+              "example": "",
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "memberId": 1
+                }
+              },
+              "example": {
+                "memberId": 1
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": " (removeMember)",
+        "description": "Remove a member from a pastoral\n\n _app/controllers/pastorals_controller.ts_ - **removeMember**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Pastoral ID",
+            "schema": {
+              "example": "",
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      }
+    },
+    "/pastorals/{id}/coordinators": {
+      "post": {
+        "summary": " (addCoordinator)",
+        "description": "Add a coordinator to a pastoral\n\n _app/controllers/pastorals_controller.ts_ - **addCoordinator**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Pastoral ID",
+            "schema": {
+              "example": "",
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": 1
+                }
+              },
+              "example": {
+                "userId": 1
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": " (removeCoordinator)",
+        "description": "Remove a coordinator from a pastoral\n\n _app/controllers/pastorals_controller.ts_ - **removeCoordinator**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Pastoral ID",
+            "schema": {
+              "example": "",
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      }
+    },
+    "/pastorals/{id}/invite-user": {
+      "post": {
+        "summary": " (inviteUser)",
+        "description": "Invite a user to join a pastoral\n\n _app/controllers/pastorals_controller.ts_ - **inviteUser**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Pastoral ID",
+            "schema": {
+              "example": "",
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": 1
+                }
+              },
+              "example": {
+                "userId": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pastorals/{id}/events": {
+      "get": {
+        "summary": "Get a list of :id (index)",
+        "description": "\n\n _app/controllers/pastoral_events_controller.ts_ - **index**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create :id (store)",
+        "description": "\n\n _app/controllers/pastoral_events_controller.ts_ - **store**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          }
+        }
+      }
+    },
+    "/events/{id}": {
+      "put": {
+        "summary": "Update :id (update)",
+        "description": "\n\n _app/controllers/pastoral_events_controller.ts_ - **update**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete :id (destroy)",
+        "description": "\n\n _app/controllers/pastoral_events_controller.ts_ - **destroy**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      }
+    },
+    "/pastorals/{id}/announcements": {
+      "post": {
+        "summary": " (sendToPastoral)",
+        "description": "\n\n _app/controllers/pastoral_notices_controller.ts_ - **sendToPastoral**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          }
+        }
+      }
+    },
+    "/announcements/all": {
+      "post": {
+        "summary": " (sendToAll)",
+        "description": "\n\n _app/controllers/pastoral_notices_controller.ts_ - **sendToAll**",
+        "parameters": [],
+        "tags": [
+          "ALL"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          }
+        }
+      }
+    },
+    "/notifications": {
+      "get": {
+        "summary": "Get a list of  (index)",
+        "description": "\n\n _app/controllers/notification_controller.ts_ - **index**",
+        "parameters": [],
+        "tags": [
+          ""
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      }
+    },
+    "/notifications/unread-count": {
+      "get": {
+        "summary": " (unreadCount)",
+        "description": "\n\n _app/controllers/notification_controller.ts_ - **unreadCount**",
+        "parameters": [],
+        "tags": [
+          "UNREAD-COUNT"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      }
+    },
+    "/notifications/{id}/read": {
+      "put": {
+        "summary": " (markAsRead)",
+        "description": "\n\n _app/controllers/notification_controller.ts_ - **markAsRead**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Get a list of  (index)",
+        "description": "List all users\n\n _app/controllers/users_controller.ts_ - **index**",
+        "parameters": [],
+        "tags": [
+          ""
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "Get a single instance of :id (show)",
+        "description": "Display a single user\n\n _app/controllers/users_controller.ts_ - **show**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "User ID",
+            "schema": {
+              "example": "",
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update :id (update)",
+        "description": "Update user details\n\n _app/controllers/users_controller.ts_ - **update**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "User ID",
+            "schema": {
+              "example": "",
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "example": {}
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete :id (destroy)",
+        "description": "Delete a user\n\n _app/controllers/users_controller.ts_ - **destroy**",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "User ID",
+            "schema": {
+              "example": "",
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "tags": [
+          ":ID"
+        ],
+        "responses": {
+          "401": {
+            "description": "Returns **401** (Unauthorized)"
+          },
+          "403": {
+            "description": "Returns **403** (Forbidden)"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "access"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "REGISTER",
+      "description": "Everything related to REGISTER"
+    },
+    {
+      "name": "LOGIN",
+      "description": "Everything related to LOGIN"
+    },
+    {
+      "name": "LOGOUT",
+      "description": "Everything related to LOGOUT"
+    },
+    {
+      "name": "ME",
+      "description": "Everything related to ME"
+    },
+    {
+      "name": ":ID",
+      "description": "Everything related to :ID"
+    },
+    {
+      "name": "AGENDA",
+      "description": "Everything related to AGENDA"
+    },
+    {
+      "name": "CLASSES",
+      "description": "Everything related to CLASSES"
+    },
+    {
+      "name": "ENROLL",
+      "description": "Everything related to ENROLL"
+    },
+    {
+      "name": "ATTENDANCE",
+      "description": "Everything related to ATTENDANCE"
+    },
+    {
+      "name": "MEMBERS",
+      "description": "Everything related to MEMBERS"
+    },
+    {
+      "name": "DONATIONS",
+      "description": "Everything related to DONATIONS"
+    },
+    {
+      "name": "SACRAMENTS",
+      "description": "Everything related to SACRAMENTS"
+    },
+    {
+      "name": "ALL",
+      "description": "Everything related to ALL"
+    },
+    {
+      "name": "UNREAD-COUNT",
+      "description": "Everything related to UNREAD-COUNT"
+    }
+  ]
+}
