@@ -1,5 +1,5 @@
 // app/models/catechism_class.ts
-import { DateTime } from 'luxon'
+import { DateTime } from '../../node_modules/@types/luxon/index.js'
 import { BaseModel, column, belongsTo, hasMany } from '@adonisjs/lucid/orm'
 import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import User from './user.js'

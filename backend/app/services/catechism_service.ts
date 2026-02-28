@@ -1,7 +1,7 @@
 import CatechismClass from '#models/catechism_class'
 import CatechismEnrollment from '#models/catechism_enrollment'
 import Attendance from '#models/attendance'
-import { DateTime } from 'luxon'
+import { DateTime } from '../../node_modules/@types/luxon/index.js'
 import { inject } from '@adonisjs/core'
 import AttendanceService from './attendance_service.js'
 

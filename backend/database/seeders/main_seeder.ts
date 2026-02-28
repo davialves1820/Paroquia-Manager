@@ -7,7 +7,7 @@ import Sacrament from '#models/sacrament'
 import CatechismClass from '#models/catechism_class'
 import CatechismEnrollment from '#models/catechism_enrollment'
 import Attendance from '#models/attendance'
-import { DateTime } from 'luxon'
+import { DateTime } from '../../node_modules/@types/luxon/index.js'
 
 export default class MainSeeder extends BaseSeeder {
   async run() {

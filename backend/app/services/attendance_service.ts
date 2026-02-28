@@ -1,5 +1,5 @@
 import Attendance from '#models/attendance'
-import { DateTime } from 'luxon'
+import { DateTime } from '../../node_modules/@types/luxon/index.js'
 
 export default class AttendanceService {
     /**

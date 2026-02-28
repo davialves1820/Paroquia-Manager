@@ -1,5 +1,5 @@
 import Donation from '#models/donation'
-import { DateTime } from 'luxon'
+import { DateTime } from '../../node_modules/@types/luxon/index.js'
 
 export default class DonationService {
     async all() {

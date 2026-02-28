@@ -27,4 +27,4 @@ export default class DonationController {
     }
 }
 
-import { DateTime } from 'luxon'
+import { DateTime } from '../../node_modules/@types/luxon/index.js'
