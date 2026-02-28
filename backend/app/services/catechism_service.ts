@@ -163,8 +163,10 @@ export default class CatechismService {
 
     async getStudentsMissingSacraments() {
         return await CatechismStudent.query()
-            .where('hasBaptism', false)
-            .orWhere('hasFirstEucharist', false)
+            .whereNot('status', 'DROPPED')
+            .andWhere((query) => {
+                query.where('hasBaptism', false).orWhere('hasFirstEucharist', false)
+            })
             .preload('catechismClass')
     }
 }
