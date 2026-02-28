@@ -2,7 +2,7 @@ import { HttpContext } from '@adonisjs/core/http'
 import { inject } from '@adonisjs/core'
 import Pastoral from '#models/pastoral'
 import PastoralEvent from '#models/pastoral_event'
-import { DateTime } from '../../node_modules/@types/luxon/index.js'
+import { DateTime } from 'luxon'
 import AttendanceService from '#services/attendance_service'
 
 @inject()

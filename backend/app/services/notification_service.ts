@@ -1,6 +1,5 @@
 import Notification from '#models/notification'
 import User from '#models/user'
-import Member from '#models/member'
 import Pastoral from '#models/pastoral'
 
 export default class NotificationService {

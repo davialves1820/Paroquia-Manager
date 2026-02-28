@@ -10,7 +10,6 @@ export default class MemberService {
             .where('id', id)
             .preload('sacraments')
             .preload('donations')
-            .preload('enrollments', (q) => q.preload('catechismClass'))
             .firstOrFail()
     }
 

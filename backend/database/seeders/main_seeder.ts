@@ -5,18 +5,18 @@ import Pastoral from '#models/pastoral'
 import Donation from '#models/donation'
 import Sacrament from '#models/sacrament'
 import CatechismClass from '#models/catechism_class'
-import CatechismEnrollment from '#models/catechism_enrollment'
+import CatechismStudent from '#models/catechism_student'
 import Attendance from '#models/attendance'
-import { DateTime } from '../../node_modules/@types/luxon/index.js'
+import { DateTime } from 'luxon'
 
 export default class MainSeeder extends BaseSeeder {
   async run() {
     // 1. USUÁRIOS
-    const users = await User.createMany([
+    const users = await User.updateOrCreateMany('email', [
       { fullName: 'Administrador Sistema', email: 'admin@email.com', password: 'senha_segura', role: 'ADMIN' },
       { fullName: 'Padre Antônio', email: 'padre@email.com', password: 'senha_segura', role: 'PADRE' },
       { fullName: 'Secretária Maria', email: 'secretaria@email.com', password: 'senha_segura', role: 'SECRETARIA' },
-      { fullName: 'Coordenadora Julia', email: 'coordenador@email.com', password: 'senha_segura', role: 'COORDENADOR' },
+      { fullName: 'Coordenadora Julia', email: 'coordenador@email.com', password: 'senha_segura', role: 'CATEQUISTA' },
       { fullName: 'Fiel Exemplo', email: 'fiel@email.com', password: 'senha_segura', role: 'FIEL' },
     ])
 
@@ -78,27 +78,47 @@ export default class MainSeeder extends BaseSeeder {
     ])
 
     // 6. CATEQUESE
-    const turma = await CatechismClass.create({
+    const turma2024 = await CatechismClass.create({
       name: 'Eucaristia - Turma A',
       year: 2024,
       catechistId: coordenadoraId,
     })
 
-    const alunos = [members[2], members[5]]
-    for (const aluno of alunos) {
-      await CatechismEnrollment.create({
-        classId: turma.id,
-        memberId: aluno.id,
+    const turma2023 = await CatechismClass.create({
+      name: 'Batismo - Turma B',
+      year: 2023,
+      catechistId: coordenadoraId,
+    })
+
+    // Alunos 2024 (Ativos)
+    const alunos2024 = ['João da Silva', 'Maria Oliveira']
+    for (const alunoNome of alunos2024) {
+      await CatechismStudent.create({
+        classId: turma2024.id,
+        name: alunoNome,
+        status: 'ACTIVE'
       })
     }
 
-    // Chamadas de teste
+    // Alunos 2023 (Concluídos)
+    const alunos2023 = ['Pedro Henrique', 'Ana Beatriz', 'Lucas Santos']
+    for (const alunoNome of alunos2023) {
+      await CatechismStudent.create({
+        classId: turma2023.id,
+        name: alunoNome,
+        status: 'COMPLETED'
+      })
+    }
+
+    const allStudents = await CatechismStudent.all()
+
+    // Chamadas de teste (Presenças)
     for (let i = 0; i < 4; i++) {
-      const date = DateTime.fromISO('2024-02-01').plus({ weeks: i })
-      for (const aluno of alunos) {
+      const date = DateTime.now().minus({ weeks: i })
+      for (const student of allStudents) {
         await Attendance.create({
-          classId: turma.id,
-          memberId: aluno.id,
+          classId: student.classId,
+          catechismStudentId: student.id,
           date: date,
           present: Math.random() > 0.2, // 80% de chance de presença
         })

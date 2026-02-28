@@ -2,7 +2,7 @@ import ExcelJS from 'exceljs'
 import Member from '#models/member'
 import Donation from '#models/donation'
 import Sacrament from '#models/sacrament'
-import { DateTime } from '../../node_modules/@types/luxon/index.js'
+import { DateTime } from 'luxon'
 
 export default class ReportService {
     async generateMembersExcel() {

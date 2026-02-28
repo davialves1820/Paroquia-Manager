@@ -1,27 +1,27 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, belongsTo, hasMany } from '@adonisjs/lucid/orm'
 import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
-import Pastoral from './pastoral.js'
+import CatechismClass from './catechism_class.js'
 import Attendance from './attendance.js'
 
-export default class PastoralEvent extends BaseModel {
+export default class CatechismStudent extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
   @column()
-  declare pastoralId: number
+  declare name: string
 
   @column()
-  declare title: string
+  declare classId: number
 
   @column()
-  declare description: string | null
-
-  @column.dateTime()
-  declare date: DateTime
+  declare status: 'ACTIVE' | 'COMPLETED' | 'DROPPED'
 
   @column()
-  declare location: string | null
+  declare hasBaptism: boolean
+
+  @column()
+  declare hasFirstEucharist: boolean
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -29,9 +29,15 @@ export default class PastoralEvent extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
 
-  @belongsTo(() => Pastoral)
-  declare pastoral: BelongsTo<typeof Pastoral>
+  // 🔁 RELACIONAMENTOS
 
-  @hasMany(() => Attendance)
+  @belongsTo(() => CatechismClass, {
+    foreignKey: 'classId',
+  })
+  declare catechismClass: BelongsTo<typeof CatechismClass>
+
+  @hasMany(() => Attendance, {
+    foreignKey: 'catechismStudentId',
+  })
   declare attendances: HasMany<typeof Attendance>
 }

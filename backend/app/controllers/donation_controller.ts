@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon'
 import { HttpContext } from '@adonisjs/core/http'
 import { inject } from '@adonisjs/core'
 import DonationService from '#services/donation_service'
@@ -26,5 +27,3 @@ export default class DonationController {
         return this.donationService.getYearlyReport(Number(year))
     }
 }
-
-import { DateTime } from '../../node_modules/@types/luxon/index.js'

@@ -1,9 +1,9 @@
-import { DateTime } from '../../node_modules/@types/luxon/index.js'
+import { DateTime } from 'luxon'
 import { BaseModel, column, hasMany, manyToMany, belongsTo } from '@adonisjs/lucid/orm'
 import type { HasMany, ManyToMany, BelongsTo } from '@adonisjs/lucid/types/relations'
 import Donation from './donation.js'
 import Sacrament from './sacrament.js'
-import CatechismEnrollment from './catechism_enrollment.js'
+
 import Attendance from './attendance.js'
 import Pastoral from './pastoral.js'
 import User from './user.js'
@@ -49,9 +49,6 @@ export default class Member extends BaseModel {
 
   @hasMany(() => Sacrament)
   declare sacraments: HasMany<typeof Sacrament>
-
-  @hasMany(() => CatechismEnrollment)
-  declare enrollments: HasMany<typeof CatechismEnrollment>
 
   @hasMany(() => Attendance)
   declare attendances: HasMany<typeof Attendance>

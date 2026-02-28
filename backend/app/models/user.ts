@@ -1,7 +1,7 @@
 import Sacrament from './sacrament.js'
 import CatechismClass from './catechism_class.js'
 import Notification from './notification.js'
-import { DateTime } from '../../node_modules/@types/luxon/index.js'
+import { DateTime } from 'luxon'
 import hash from '@adonisjs/core/services/hash'
 import { compose } from '@adonisjs/core/helpers'
 import { BaseModel, column, hasMany, manyToMany } from '@adonisjs/lucid/orm'
@@ -20,6 +20,7 @@ export type UserRole =
   | 'PADRE'
   | 'SECRETARIA'
   | 'COORDENADOR'
+  | 'CATEQUISTA'
   | 'FIEL'
 
 export default class User extends compose(BaseModel, AuthFinder) {

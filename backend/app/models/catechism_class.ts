@@ -1,9 +1,9 @@
 // app/models/catechism_class.ts
-import { DateTime } from '../../node_modules/@types/luxon/index.js'
+import { DateTime } from 'luxon'
 import { BaseModel, column, belongsTo, hasMany } from '@adonisjs/lucid/orm'
 import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import User from './user.js'
-import CatechismEnrollment from './catechism_enrollment.js'
+import CatechismStudent from './catechism_student.js'
 import Attendance from './attendance.js'
 
 export default class CatechismClass extends BaseModel {
@@ -32,10 +32,10 @@ export default class CatechismClass extends BaseModel {
   })
   declare catechist: BelongsTo<typeof User>
 
-  @hasMany(() => CatechismEnrollment, {
+  @hasMany(() => CatechismStudent, {
     foreignKey: 'classId',
   })
-  declare enrollments: HasMany<typeof CatechismEnrollment>
+  declare students: HasMany<typeof CatechismStudent>
 
   @hasMany(() => Attendance, {
     foreignKey: 'classId',

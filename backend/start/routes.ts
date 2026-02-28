@@ -71,12 +71,19 @@ router.group(() => {
 
   // CATECHISM
   router.group(() => {
+    router.get('/', [CatechismController, 'index'])
     router.post('classes', [CatechismController, 'storeClass'])
     router.get('classes/:id', [CatechismController, 'show'])
-    router.post('enroll', [CatechismController, 'enroll'])
+    router.post('students', [CatechismController, 'addStudent'])
+    router.put('students/:id', [CatechismController, 'updateStudent'])
+    router.delete('students/:studentId', [CatechismController, 'removeStudent'])
     router.post('attendance', [CatechismController, 'attendance'])
-    router.get('classes/:classId/members/:memberId/frequency', [CatechismController, 'frequency'])
-  }).prefix('catechism')
+    router.get('classes/:classId/students/:studentId/frequency', [CatechismController, 'frequency'])
+    router.get('metrics', [CatechismController, 'metrics'])
+    router.get('missing-sacraments', [CatechismController, 'missingSacraments'])
+    router.post('meetings', [CatechismController, 'toggleMeeting'])
+    router.get('meetings/status', [CatechismController, 'meetingStatus'])
+  }).prefix('catechism').use(middleware.rbac({ roles: ['ADMIN', 'CATEQUISTA'] }))
 
   // REPORTS
   router.group(() => {
