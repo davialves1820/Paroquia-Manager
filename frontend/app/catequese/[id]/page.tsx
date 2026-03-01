@@ -80,18 +80,38 @@ export default function ClassDetailsPage({ params }: { params: Promise<{ id: str
 
     const handleAddStudent = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!details) return;
+
+        const tempId = Math.random();
+        const newStudent: Catequizando = {
+            id: tempId,
+            name: studentName,
+            hasBaptism,
+            hasFirstEucharist,
+            frequency: 0,
+            status: 'ACTIVE'
+        };
+
+        const previousStudents = [...details.students];
+        const newStudents = [...previousStudents, newStudent].sort((a, b) => a.name.localeCompare(b.name));
+
+        setDetails({ ...details, students: newStudents });
+
+        // Clear form
+        setStudentName('');
+        setHasBaptism(false);
+        setHasFirstEucharist(false);
+
         try {
             await api.post('/catechism/students', {
                 classId: parseInt(id),
-                name: studentName,
-                hasBaptism,
-                hasFirstEucharist,
+                name: newStudent.name,
+                hasBaptism: newStudent.hasBaptism,
+                hasFirstEucharist: newStudent.hasFirstEucharist,
             });
-            setStudentName('');
-            setHasBaptism(false);
-            setHasFirstEucharist(false);
-            fetchDetails();
+            fetchDetails(); // Sync with real ID and any server side logic
         } catch (err) {
+            setDetails({ ...details, students: previousStudents });
             alert('Erro ao adicionar aluno');
         }
     };
@@ -136,18 +156,33 @@ export default function ClassDetailsPage({ params }: { params: Promise<{ id: str
     };
 
     const handleRemoveStudent = async (studentId: number) => {
-        if (!confirm('Deseja realmente remover este aluno?')) return;
+        if (!confirm('Deseja realmente remover este aluno?') || !details) return;
+
+        const previousStudents = [...details.students];
+        const newStudents = previousStudents.filter(s => s.id !== studentId);
+
+        setDetails({ ...details, students: newStudents });
+
         try {
             await api.delete(`/catechism/students/${studentId}`);
-            fetchDetails();
+            // No need to fetchDetails here if we're sure about the removal
         } catch (err) {
+            setDetails({ ...details, students: previousStudents });
             alert('Erro ao remover aluno');
         }
     };
 
     const handleUpdateStudent = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!editingStudent) return;
+        if (!editingStudent || !details) return;
+
+        const previousStudents = [...details.students];
+        const newStudents = previousStudents.map(s =>
+            s.id === editingStudent.id ? editingStudent : s
+        ).sort((a, b) => a.name.localeCompare(b.name));
+
+        setDetails({ ...details, students: newStudents });
+        setEditingStudent(null);
 
         try {
             await api.put(`/catechism/students/${editingStudent.id}`, {
@@ -156,24 +191,30 @@ export default function ClassDetailsPage({ params }: { params: Promise<{ id: str
                 hasFirstEucharist: editingStudent.hasFirstEucharist,
                 status: editingStudent.status,
             });
-            setEditingStudent(null);
             fetchDetails();
         } catch (err) {
+            setDetails({ ...details, students: previousStudents });
             alert('Erro ao atualizar aluno');
         }
     };
 
     const handleToggleMeeting = async () => {
+        if (!details) return;
+
+        const previousHasMeeting = hasMeeting;
+        const newValue = !hasMeeting;
+
+        setHasMeeting(newValue);
+
         try {
-            const newValue = !hasMeeting;
             await api.post('/catechism/meetings', {
                 classId: parseInt(id),
                 date: selectedDate,
                 occurred: newValue,
             });
-            setHasMeeting(newValue);
             fetchDetails(); // Recalculate frequencies
         } catch (err) {
+            setHasMeeting(previousHasMeeting);
             alert('Erro ao atualizar status do encontro');
         }
     };
