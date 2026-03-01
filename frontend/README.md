@@ -1,4 +1,4 @@
-# Paróquia Manager - Frontend ⛪
+# Paróquia Manager - Frontend
 
 Interface moderna e intuitiva para o gerenciamento de paróquias, desenvolvida com **Next.js** e **React 19**.
 

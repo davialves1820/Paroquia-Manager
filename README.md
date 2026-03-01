@@ -1,4 +1,4 @@
-# Paróquia Manager 🏯
+# Paróquia Manager
 
 Bem-vindo ao repositório do **Paróquia Manager**, um sistema completo para gestão administrativa e pastoral da sua paróquia.
 
@@ -19,6 +19,3 @@ O projeto é dividido em dois repositórios principais:
 1.  Configure e inicie o **Backend** seguindo o [Guia do Desenvolvedor Backend](./backend/README.dev.md).
 2.  Configure e inicie o **Frontend** seguindo o [Guia do Desenvolvedor Frontend](./frontend/frontend/README.dev.md).
 3.  Acesse `http://localhost:3000` e comece a gerenciar!
-
----
-Sistema desenvolvido com foco em eficiência paroquial.

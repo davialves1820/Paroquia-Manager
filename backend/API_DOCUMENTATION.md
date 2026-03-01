@@ -1,7 +1,7 @@
-# Documentação da API - Paróquia Manager Pro
+# Documentação da API
 
 ## Objetivo do Sistema
-O **Paróquia Manager Pro** é um sistema de gestão eclesiástica completo, projetado para informatizar e agilizar a administração de paróquias. O sistema permite o controle centralizado de fiéis, gestão financeira (dízimos e doações), registros sacramentais, organização da catequese e das pastorais, além de fornecer ferramentas de comunicação (avisos/notificações) e relatórios administrativos.
+O **Paróquia Manager** é um sistema de gestão eclesiástica completo, projetado para informatizar e agilizar a administração de paróquias. O sistema permite o controle centralizado de fiéis, gestão financeira (dízimos e doações), registros sacramentais, organização da catequese e das pastorais, além de fornecer ferramentas de comunicação (avisos/notificações) e relatórios administrativos.
 
 ---
 

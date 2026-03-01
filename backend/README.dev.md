@@ -1,4 +1,4 @@
-# Paróquia Manager - Guia do Desenvolvedor 🛠️
+# Paróquia Manager - Guia do Desenvolvedor
 
 Este é o backend do sistema, construído com **AdonisJS 6** e **PostgreSQL**.
 

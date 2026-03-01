@@ -1,6 +1,6 @@
-# Paróquia Manager - Backend 🕍
+# Paróquia Manager - Backend
 
-Sistema de gerenciamento paroquial robusto, desenvolvido com **AdonisJS 6**, focado em automação de processos, relatórios e controle de sacramentos.
+Sistema de gerenciamento paroquial, desenvolvido com **AdonisJS 6**, focado em automação de processos, relatórios e controle de sacramentos.
 
 ## ✨ Funcionalidades Principais
 

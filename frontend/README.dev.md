@@ -1,4 +1,4 @@
-# Paróquia Manager - Guia do Desenvolvedor (Frontend) 💻
+# Paróquia Manager - Guia do Desenvolvedor (Frontend)
 
 Este é o frontend do sistema, construído com **Next.js**, **React 19**, **TypeScript** e **Tailwind CSS 4**.
 
