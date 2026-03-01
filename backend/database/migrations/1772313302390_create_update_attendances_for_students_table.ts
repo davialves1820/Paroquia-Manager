@@ -6,7 +6,7 @@ export default class extends BaseSchema {
   async up() {
     this.schema.alterTable(this.tableName, (table) => {
       table.integer('catechism_student_id').unsigned().references('id').inTable('catechism_students').onDelete('CASCADE').nullable()
-      table.integer('member_id').unsigned().references('id').inTable('members').onDelete('CASCADE').nullable().alter()
+      table.integer('member_id').unsigned().nullable().alter()
     })
   }
 
@@ -17,7 +17,7 @@ export default class extends BaseSchema {
 
     this.schema.alterTable(this.tableName, (table) => {
       table.dropColumn('catechism_student_id')
-      table.integer('member_id').unsigned().references('id').inTable('members').onDelete('CASCADE').notNullable().alter()
+      table.integer('member_id').unsigned().notNullable().alter()
     })
   }
 }

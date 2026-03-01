@@ -5,10 +5,6 @@ export default class AuthService {
     async login({ request, response }: HttpContext) {
         const { email, password } = request.only(['email', 'password'])
 
-        console.log('[AuthService] Tentativa de login:')
-        console.log(`- Email recebido: ${email}`)
-        console.log(`- Senha recebida (tamanho): ${password?.length || 0}`)
-
         try {
             const user = await User.verifyCredentials(email, password)
             const token = await User.accessTokens.create(user)
