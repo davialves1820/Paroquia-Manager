@@ -46,7 +46,11 @@ export default function ClassDetailsPage({ params }: { params: Promise<{ id: str
     const fetchDetails = async () => {
         try {
             const response = await api.get(`/catechism/classes/${id}`);
-            setDetails(response.data);
+            const sortedDetails = {
+                ...response.data,
+                students: [...response.data.students].sort((a, b) => a.name.localeCompare(b.name))
+            };
+            setDetails(sortedDetails);
         } catch (err) {
             console.error('Error fetching class details', err);
         } finally {
@@ -93,15 +97,40 @@ export default function ClassDetailsPage({ params }: { params: Promise<{ id: str
     };
 
     const toggleAttendance = async (studentId: number, currentStatus: boolean | undefined) => {
+        if (!details) return;
+
+        const newStatus = !currentStatus;
+
+        // Optimistic Update
+        const previousAttendances = [...details.attendances];
+        const newAttendances = [...previousAttendances];
+        const index = newAttendances.findIndex(a => a.catechismStudentId === studentId && a.date.startsWith(selectedDate));
+
+        if (index > -1) {
+            newAttendances[index] = { ...newAttendances[index], present: newStatus };
+        } else {
+            newAttendances.push({
+                id: Math.random(), // Temporary ID
+                catechismStudentId: studentId,
+                date: selectedDate,
+                present: newStatus
+            });
+        }
+
+        setDetails({ ...details, attendances: newAttendances });
+
         try {
             await api.post('/catechism/attendance', {
                 classId: parseInt(id),
                 studentId,
                 date: selectedDate,
-                present: !currentStatus,
+                present: newStatus,
             });
+            // Re-fetch to get real IDs and updated frequencies
             fetchDetails();
         } catch (err) {
+            // Revert on error
+            setDetails({ ...details, attendances: previousAttendances });
             alert('Erro ao marcar presença');
         }
     };
@@ -117,7 +146,21 @@ export default function ClassDetailsPage({ params }: { params: Promise<{ id: str
     };
 
     const handleUpdateStudent = async (e: React.FormEvent) => {
-        // ... same logic
+        e.preventDefault();
+        if (!editingStudent) return;
+
+        try {
+            await api.put(`/catechism/students/${editingStudent.id}`, {
+                name: editingStudent.name,
+                hasBaptism: editingStudent.hasBaptism,
+                hasFirstEucharist: editingStudent.hasFirstEucharist,
+                status: editingStudent.status,
+            });
+            setEditingStudent(null);
+            fetchDetails();
+        } catch (err) {
+            alert('Erro ao atualizar aluno');
+        }
     };
 
     const handleToggleMeeting = async () => {
