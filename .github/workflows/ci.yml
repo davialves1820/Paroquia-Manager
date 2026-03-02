@@ -1,0 +1,50 @@
+name: CI - Code Quality
+
+on:
+  pull_request:
+    branches: [develop, main]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # FRONTEND
+      - name: Install Frontend
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Frontend Lint
+        run: |
+          cd frontend
+          npm run lint
+
+      - name: Frontend Build
+        run: |
+          cd frontend
+          npm run build
+
+      # BACKEND
+      - name: Install Backend
+        run: |
+          cd backend
+          npm ci
+
+      - name: Backend Lint
+        run: |
+          cd backend
+          npm run lint
+
+      - name: Backend Build
+        run: |
+          cd backend
+          npm run build
