@@ -1,10 +1,11 @@
-import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { dirname } from 'node:path'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const __filename = fileURLToPath(import.meta.url)
+const dirName = dirname(__filename)
 
 export default {
-  path: path.join(__dirname, '..'),
+  path: dirName,
   title: 'Paróquia Manager Pro API',
   version: '1.0.0',
   description: 'API Documentation for Paróquia Manager Pro',
