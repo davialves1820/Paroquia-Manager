@@ -11,12 +11,14 @@ Este é o backend do sistema, construído com **AdonisJS 6** e **PostgreSQL**.
 ## ⚙️ Configuração Local
 
 1.  **Instale as dependências:**
+
     ```bash
     npm install
     ```
 
 2.  **Variáveis de Ambiente:**
     Copie o arquivo `.env.example` (se existir) para `.env` e configure suas credenciais do banco de dados:
+
     ```env
     PORT=3333
     HOST=localhost
@@ -31,6 +33,7 @@ Este é o backend do sistema, construído com **AdonisJS 6** e **PostgreSQL**.
 
 3.  **Migrações:**
     Execute as migrações para criar a estrutura do banco:
+
     ```bash
     node ace migration:run
     ```

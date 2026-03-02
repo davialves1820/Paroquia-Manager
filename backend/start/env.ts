@@ -23,5 +23,5 @@ export default await Env.create(new URL('../', import.meta.url), {
   | Variables for configuring database connection
   |----------------------------------------------------------
   */
-  DATABASE_URL: Env.schema.string()
+  DATABASE_URL: Env.schema.string(),
 })

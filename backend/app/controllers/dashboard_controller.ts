@@ -4,10 +4,10 @@ import DashboardService from '#services/dashboard_service'
 
 @inject()
 export default class DashboardController {
-    constructor(protected dashboardService: DashboardService) { }
+  constructor(protected dashboardService: DashboardService) {}
 
-    async index({ response }: HttpContext) {
-        const metrics = await this.dashboardService.getMetrics()
-        return response.ok(metrics)
-    }
+  async index({ response }: HttpContext) {
+    const metrics = await this.dashboardService.getMetrics()
+    return response.ok(metrics)
+  }
 }
