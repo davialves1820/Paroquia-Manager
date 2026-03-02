@@ -112,7 +112,7 @@ export default function ClassDetailsPage({ params }: { params: Promise<{ id: str
             fetchDetails(); // Sync with real ID and any server side logic
         } catch (err) {
             setDetails({ ...details, students: previousStudents });
-            alert('Erro ao adicionar aluno');
+            alert('Erro ao adicionar catequizando');
         }
     };
 
@@ -355,7 +355,7 @@ export default function ClassDetailsPage({ params }: { params: Promise<{ id: str
                                             );
                                         })
                                     ) : (
-                                        <p className="py-8 text-center text-zinc-500">Nenhum aluno cadastrado nesta turma.</p>
+                                        <p className="py-8 text-center text-zinc-500">Nenhum catequizando cadastrado nesta turma.</p>
                                     )}
                                 </div>
 

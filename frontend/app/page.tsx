@@ -5,7 +5,7 @@ export default function Home() {
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-black p-6">
       <div className="text-center space-y-6">
         <h1 className="text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white">
-          Paróquia Manager
+          Meninos de Jesus de Praga
         </h1>
         <p className="text-zinc-600 dark:text-zinc-400 max-w-md mx-auto">
           Sistema de Gestão de Pastorais e Catequese.
