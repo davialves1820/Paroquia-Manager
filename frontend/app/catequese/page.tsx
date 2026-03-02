@@ -264,7 +264,7 @@ export default function CatequeseDashboard() {
                                     className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 px-3 py-2 text-zinc-900 dark:text-white dark:bg-zinc-800"
                                     value={newClassName}
                                     onChange={(e) => setNewClassName(e.target.value)}
-                                    placeholder="Ex: Eucaristia - 1º Ano"
+                                    placeholder="Ex: São Thomás de Aquino"
                                 />
                             </div>
                             <div>
