@@ -19,6 +19,7 @@ export default function LoginPage() {
         try {
             const response = await api.post('/auth/login', { email, password });
             localStorage.setItem('token', response.data.token.token);
+            console.log(response);
             router.push('/catequese');
         } catch (err: any) {
             setError(err.response?.data?.message || 'Erro ao fazer login. Verifique suas credenciais.');

@@ -18,6 +18,13 @@ export default class CatechismService {
         return await CatechismClass.create(data)
     }
 
+    async updateClass(classId: number, data: { name?: string; year?: number; catechistId?: number }) {
+        const catechismClass = await CatechismClass.findOrFail(classId)
+        catechismClass.merge(data)
+        await catechismClass.save()
+        return catechismClass
+    }
+
     async addStudent(data: { classId: number; name: string; hasBaptism?: boolean; hasFirstEucharist?: boolean }) {
         return await CatechismStudent.create({
             classId: data.classId,

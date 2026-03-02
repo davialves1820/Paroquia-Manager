@@ -73,6 +73,7 @@ router.group(() => {
   router.group(() => {
     router.get('/', [CatechismController, 'index'])
     router.post('classes', [CatechismController, 'storeClass'])
+    router.put('classes/:id', [CatechismController, 'updateClass'])
     router.get('classes/:id', [CatechismController, 'show'])
     router.post('students', [CatechismController, 'addStudent'])
     router.put('students/:id', [CatechismController, 'updateStudent'])

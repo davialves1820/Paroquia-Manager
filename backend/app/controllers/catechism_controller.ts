@@ -15,6 +15,11 @@ export default class CatechismController {
         return this.catechismService.createClass(data)
     }
 
+    async updateClass({ params, request }: HttpContext) {
+        const data = request.only(['name', 'year', 'catechistId'])
+        return this.catechismService.updateClass(params.id, data)
+    }
+
     async addStudent({ request }: HttpContext) {
         const data = request.only(['classId', 'name', 'hasBaptism', 'hasFirstEucharist'])
         return this.catechismService.addStudent(data as any)

@@ -37,6 +37,9 @@ export default function ClassDetailsPage({ params }: { params: Promise<{ id: str
     const [hasFirstEucharist, setHasFirstEucharist] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
     const [editingStudent, setEditingStudent] = useState<Catequizando | null>(null);
+    const [editingClass, setEditingClass] = useState(false);
+    const [editClassName, setEditClassName] = useState('');
+    const [editClassYear, setEditClassYear] = useState(0);
     const [hasMeeting, setHasMeeting] = useState(false);
     const [loadingMeeting, setLoadingMeeting] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
@@ -51,6 +54,8 @@ export default function ClassDetailsPage({ params }: { params: Promise<{ id: str
                 students: [...response.data.students].sort((a, b) => a.name.localeCompare(b.name))
             };
             setDetails(sortedDetails);
+            setEditClassName(sortedDetails.name);
+            setEditClassYear(sortedDetails.year);
         } catch (err) {
             console.error('Error fetching class details', err);
         } finally {
@@ -198,6 +203,20 @@ export default function ClassDetailsPage({ params }: { params: Promise<{ id: str
         }
     };
 
+    const handleUpdateClass = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            await api.put(`/catechism/classes/${id}`, {
+                name: editClassName,
+                year: editClassYear,
+            });
+            setEditingClass(false);
+            fetchDetails();
+        } catch (err) {
+            alert('Erro ao atualizar turma');
+        }
+    };
+
     const handleToggleMeeting = async () => {
         if (!details) return;
 
@@ -250,8 +269,21 @@ export default function ClassDetailsPage({ params }: { params: Promise<{ id: str
                     {/* Main Info */}
                     <div className="lg:col-span-2 space-y-8">
                         <div className="bg-white dark:bg-zinc-900 p-4 sm:p-8 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
-                            <h1 className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-white">{details.name}</h1>
-                            <p className="text-zinc-500 mt-1">Ano: {details.year}</p>
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <h1 className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-white">{details.name}</h1>
+                                    <p className="text-zinc-500 mt-1">Ano: {details.year}</p>
+                                </div>
+                                <button
+                                    onClick={() => setEditingClass(true)}
+                                    className="p-2 text-zinc-400 hover:text-indigo-600 transition-colors"
+                                    title="Editar Turma"
+                                >
+                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                    </svg>
+                                </button>
+                            </div>
 
                             <div className="mt-12">
                                 <div className="flex justify-between items-center mb-6">
@@ -458,7 +490,16 @@ export default function ClassDetailsPage({ params }: { params: Promise<{ id: str
                     <div className="bg-white dark:bg-zinc-900 rounded-2xl w-full max-w-md p-8 shadow-2xl">
                         <h2 className="text-2xl font-bold mb-6 text-zinc-900 dark:text-white">Editar Catequizando</h2>
                         <form onSubmit={handleUpdateStudent} className="space-y-6">
-                            <p className="font-medium text-zinc-900 dark:text-white">{editingStudent.name}</p>
+                            <div>
+                                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Nome Completo</label>
+                                <input
+                                    type="text"
+                                    required
+                                    className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 px-3 py-2 text-zinc-900 dark:text-white dark:bg-zinc-800"
+                                    value={editingStudent.name}
+                                    onChange={(e) => setEditingStudent({ ...editingStudent, name: e.target.value })}
+                                />
+                            </div>
 
                             <div className="space-y-4">
                                 <label className="flex items-center gap-3 cursor-pointer group">
@@ -499,6 +540,52 @@ export default function ClassDetailsPage({ params }: { params: Promise<{ id: str
                                 <button
                                     type="button"
                                     onClick={() => setEditingStudent(null)}
+                                    className="flex-1 px-4 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800"
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-500 transition-colors"
+                                >
+                                    Salvar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
+            {editingClass && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+                    <div className="bg-white dark:bg-zinc-900 rounded-2xl w-full max-w-md p-8 shadow-2xl border border-zinc-200 dark:border-zinc-800">
+                        <h2 className="text-2xl font-bold mb-6 text-zinc-900 dark:text-white">Editar Turma</h2>
+                        <form onSubmit={handleUpdateClass} className="space-y-6">
+                            <div>
+                                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Nome da Turma</label>
+                                <input
+                                    type="text"
+                                    required
+                                    className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 px-3 py-2 text-zinc-900 dark:text-white dark:bg-zinc-800"
+                                    value={editClassName}
+                                    onChange={(e) => setEditClassName(e.target.value)}
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Ano</label>
+                                <input
+                                    type="number"
+                                    required
+                                    className="w-full rounded-lg border border-zinc-300 dark:border-zinc-700 px-3 py-2 text-zinc-900 dark:text-white dark:bg-zinc-800"
+                                    value={editClassYear}
+                                    onChange={(e) => setEditClassYear(parseInt(e.target.value))}
+                                />
+                            </div>
+
+                            <div className="flex gap-4 mt-8">
+                                <button
+                                    type="button"
+                                    onClick={() => setEditingClass(false)}
                                     className="flex-1 px-4 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800"
                                 >
                                     Cancelar
