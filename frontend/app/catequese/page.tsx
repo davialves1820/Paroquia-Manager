@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import api from '@/lib/api';
 
@@ -29,9 +29,15 @@ interface StudentMissingSacraments {
     };
 }
 
+interface CatechismMetrics {
+    totalStudents: number;
+    completionRate: number;
+    activeClasses: number;
+}
+
 export default function CatequeseDashboard() {
     const [classes, setClasses] = useState<CatechismClass[]>([]);
-    const [metrics, setMetrics] = useState<any>(null);
+    const [metrics, setMetrics] = useState<CatechismMetrics | null>(null);
     const [loading, setLoading] = useState(true);
     const [selectedYear, setSelectedYear] = useState<string>('all');
     const [showModal, setShowModal] = useState(false);
@@ -47,7 +53,7 @@ export default function CatequeseDashboard() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         setLoading(true);
         try {
             const metricsParams = selectedYear !== 'all' ? { params: { year: parseInt(selectedYear) } } : {};
@@ -63,11 +69,11 @@ export default function CatequeseDashboard() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [selectedYear]);
 
     useEffect(() => {
         fetchData();
-    }, [selectedYear]);
+    }, [fetchData]);
 
     const handleUpdateStudent = async (e: React.FormEvent) => {
         e.preventDefault();

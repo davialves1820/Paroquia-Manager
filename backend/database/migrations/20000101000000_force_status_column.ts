@@ -1,21 +1,17 @@
 import { BaseSchema } from '@adonisjs/lucid/schema'
 
 export default class extends BaseSchema {
-    protected tableName = 'attendances'
+  protected tableName = 'attendances'
 
-    async up() {
+  async up() {
+    this.schema.alterTable(this.tableName, (table) => {
+      table.integer('class_id').nullable().alter()
 
-        this.schema.alterTable(this.tableName, (table) => {
-            table.integer('class_id').nullable().alter()
+      table.integer('pastoral_event_id').unsigned().nullable().alter()
+    })
 
-            table.integer('pastoral_event_id')
-                .unsigned()
-                .nullable()
-                .alter()
-        })
-
-        // cria FK somente se não existir
-        this.schema.raw(`
+    // cria FK somente se não existir
+    this.schema.raw(`
       DO $$
       BEGIN
         IF NOT EXISTS (
@@ -30,12 +26,12 @@ export default class extends BaseSchema {
         END IF;
       END $$;
     `)
-    }
+  }
 
-    async down() {
-        this.schema.alterTable(this.tableName, (table) => {
-            table.dropColumn('pastoral_event_id')
-            table.integer('class_id').notNullable().alter()
-        })
-    }
+  async down() {
+    this.schema.alterTable(this.tableName, (table) => {
+      table.dropColumn('pastoral_event_id')
+      table.integer('class_id').notNullable().alter()
+    })
+  }
 }

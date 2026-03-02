@@ -5,10 +5,7 @@ import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import Member from './member.js'
 import User from './user.js'
 
-export type SacramentType =
-  | 'BATISMO'
-  | 'CRISMA'
-  | 'CASAMENTO'
+export type SacramentType = 'BATISMO' | 'CRISMA' | 'CASAMENTO'
 
 export default class Sacrament extends BaseModel {
   @column({ isPrimary: true })

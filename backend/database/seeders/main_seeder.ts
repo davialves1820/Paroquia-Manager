@@ -13,10 +13,30 @@ export default class MainSeeder extends BaseSeeder {
   async run() {
     // 1. USUÁRIOS
     const users = await User.updateOrCreateMany('email', [
-      { fullName: 'Administrador Sistema', email: 'admin@email.com', password: 'senha_segura', role: 'ADMIN' },
-      { fullName: 'Padre Antônio', email: 'padre@email.com', password: 'senha_segura', role: 'PADRE' },
-      { fullName: 'Secretária Maria', email: 'secretaria@email.com', password: 'senha_segura', role: 'SECRETARIA' },
-      { fullName: 'Coordenadora Julia', email: 'coordenador@email.com', password: 'senha_segura', role: 'CATEQUISTA' },
+      {
+        fullName: 'Administrador Sistema',
+        email: 'admin@email.com',
+        password: 'senha_segura',
+        role: 'ADMIN',
+      },
+      {
+        fullName: 'Padre Antônio',
+        email: 'padre@email.com',
+        password: 'senha_segura',
+        role: 'PADRE',
+      },
+      {
+        fullName: 'Secretária Maria',
+        email: 'secretaria@email.com',
+        password: 'senha_segura',
+        role: 'SECRETARIA',
+      },
+      {
+        fullName: 'Coordenadora Julia',
+        email: 'coordenador@email.com',
+        password: 'senha_segura',
+        role: 'CATEQUISTA',
+      },
       { fullName: 'Fiel Exemplo', email: 'fiel@email.com', password: 'senha_segura', role: 'FIEL' },
     ])
 
@@ -25,16 +45,76 @@ export default class MainSeeder extends BaseSeeder {
 
     // 2. FIÉIS (MEMBROS)
     const membersData = [
-      { name: 'João da Silva', birthDate: DateTime.fromISO('1985-06-12'), baptized: true, confirmed: true, married: true },
-      { name: 'Maria Oliveira', birthDate: DateTime.fromISO('1992-03-25'), baptized: true, confirmed: true, married: false },
-      { name: 'Pedro Santos', birthDate: DateTime.fromISO('2010-08-05'), baptized: true, confirmed: false, married: false },
-      { name: 'Ana Costa', birthDate: DateTime.fromISO('1978-11-30'), baptized: true, confirmed: true, married: true },
-      { name: 'Lucas Ferreira', birthDate: DateTime.fromISO('2005-01-15'), baptized: true, confirmed: true, married: false },
-      { name: 'Carla Souza', birthDate: DateTime.fromISO('1995-09-20'), baptized: true, confirmed: false, married: false },
-      { name: 'Marcos Lima', birthDate: DateTime.fromISO('1988-07-08'), baptized: true, confirmed: true, married: true },
-      { name: 'Juliana Pires', birthDate: DateTime.fromISO('1990-12-12'), baptized: true, confirmed: true, married: true },
-      { name: 'Roberto Rocha', birthDate: DateTime.fromISO('1982-04-18'), baptized: true, confirmed: true, married: false },
-      { name: 'Fernanda Alves', birthDate: DateTime.fromISO('1998-02-22'), baptized: true, confirmed: false, married: false },
+      {
+        name: 'João da Silva',
+        birthDate: DateTime.fromISO('1985-06-12'),
+        baptized: true,
+        confirmed: true,
+        married: true,
+      },
+      {
+        name: 'Maria Oliveira',
+        birthDate: DateTime.fromISO('1992-03-25'),
+        baptized: true,
+        confirmed: true,
+        married: false,
+      },
+      {
+        name: 'Pedro Santos',
+        birthDate: DateTime.fromISO('2010-08-05'),
+        baptized: true,
+        confirmed: false,
+        married: false,
+      },
+      {
+        name: 'Ana Costa',
+        birthDate: DateTime.fromISO('1978-11-30'),
+        baptized: true,
+        confirmed: true,
+        married: true,
+      },
+      {
+        name: 'Lucas Ferreira',
+        birthDate: DateTime.fromISO('2005-01-15'),
+        baptized: true,
+        confirmed: true,
+        married: false,
+      },
+      {
+        name: 'Carla Souza',
+        birthDate: DateTime.fromISO('1995-09-20'),
+        baptized: true,
+        confirmed: false,
+        married: false,
+      },
+      {
+        name: 'Marcos Lima',
+        birthDate: DateTime.fromISO('1988-07-08'),
+        baptized: true,
+        confirmed: true,
+        married: true,
+      },
+      {
+        name: 'Juliana Pires',
+        birthDate: DateTime.fromISO('1990-12-12'),
+        baptized: true,
+        confirmed: true,
+        married: true,
+      },
+      {
+        name: 'Roberto Rocha',
+        birthDate: DateTime.fromISO('1982-04-18'),
+        baptized: true,
+        confirmed: true,
+        married: false,
+      },
+      {
+        name: 'Fernanda Alves',
+        birthDate: DateTime.fromISO('1998-02-22'),
+        baptized: true,
+        confirmed: false,
+        married: false,
+      },
     ]
 
     const members = await Member.createMany(membersData)
@@ -71,10 +151,30 @@ export default class MainSeeder extends BaseSeeder {
 
     // 5. SACRAMENTOS
     await Sacrament.createMany([
-      { memberId: members[2].id, priestId: padreId, type: 'BATISMO', date: DateTime.fromISO('2011-05-20') },
-      { memberId: members[5].id, priestId: padreId, type: 'BATISMO', date: DateTime.fromISO('1996-01-10') },
-      { memberId: members[0].id, priestId: padreId, type: 'CASAMENTO', date: DateTime.fromISO('2015-10-05') },
-      { memberId: members[4].id, priestId: padreId, type: 'CRISMA', date: DateTime.fromISO('2023-11-15') },
+      {
+        memberId: members[2].id,
+        priestId: padreId,
+        type: 'BATISMO',
+        date: DateTime.fromISO('2011-05-20'),
+      },
+      {
+        memberId: members[5].id,
+        priestId: padreId,
+        type: 'BATISMO',
+        date: DateTime.fromISO('1996-01-10'),
+      },
+      {
+        memberId: members[0].id,
+        priestId: padreId,
+        type: 'CASAMENTO',
+        date: DateTime.fromISO('2015-10-05'),
+      },
+      {
+        memberId: members[4].id,
+        priestId: padreId,
+        type: 'CRISMA',
+        date: DateTime.fromISO('2023-11-15'),
+      },
     ])
 
     // 6. CATEQUESE
@@ -96,7 +196,7 @@ export default class MainSeeder extends BaseSeeder {
       await CatechismStudent.create({
         classId: turma2024.id,
         name: alunoNome,
-        status: 'ACTIVE'
+        status: 'ACTIVE',
       })
     }
 
@@ -106,7 +206,7 @@ export default class MainSeeder extends BaseSeeder {
       await CatechismStudent.create({
         classId: turma2023.id,
         name: alunoNome,
-        status: 'COMPLETED'
+        status: 'COMPLETED',
       })
     }
 

@@ -15,13 +15,7 @@ const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   passwordColumnName: 'password',
 })
 
-export type UserRole =
-  | 'ADMIN'
-  | 'PADRE'
-  | 'SECRETARIA'
-  | 'COORDENADOR'
-  | 'CATEQUISTA'
-  | 'FIEL'
+export type UserRole = 'ADMIN' | 'PADRE' | 'SECRETARIA' | 'COORDENADOR' | 'CATEQUISTA' | 'FIEL'
 
 export default class User extends compose(BaseModel, AuthFinder) {
   @column({ isPrimary: true })
@@ -44,7 +38,6 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
-
 
   // 🔁 RELACIONAMENTOS
 

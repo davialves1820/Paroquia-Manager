@@ -16,5 +16,5 @@ export const policies = {
   PastoralEventPolicy: () => import('#policies/pastoral_event_policy'),
   UserPolicy: () => import('#policies/user_policy'),
   PastoralPolicy: () => import('#policies/pastoral_policy'),
-  SacramentPolicy: () => import('#policies/sacrament_policy')
+  SacramentPolicy: () => import('#policies/sacrament_policy'),
 }

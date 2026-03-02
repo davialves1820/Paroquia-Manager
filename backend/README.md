@@ -16,4 +16,5 @@ Para utilizar o sistema, certifique-se de que o backend está rodando e acesse a
 `http://localhost:3333/docs` (em ambiente de desenvolvimento).
 
 ---
+
 Para detalhes técnicos de instalação, consulte o [README.dev.md](./README.dev.md).

@@ -4,11 +4,7 @@ import { BaseModel, column, belongsTo } from '@adonisjs/lucid/orm'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import Member from './member.js'
 
-export type PaymentMethod =
-  | 'DINHEIRO'
-  | 'PIX'
-  | 'CARTAO'
-  | 'TRANSFERENCIA'
+export type PaymentMethod = 'DINHEIRO' | 'PIX' | 'CARTAO' | 'TRANSFERENCIA'
 
 export default class Donation extends BaseModel {
   @column({ isPrimary: true })

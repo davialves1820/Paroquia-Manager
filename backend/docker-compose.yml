@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3333:3333"
+      - '3333:3333'
     environment:
       - NODE_ENV=development
       - PORT=3333
@@ -28,7 +28,7 @@ services:
       - POSTGRES_PASSWORD=secret
       - POSTGRES_DB=paroquia_manager
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - pgdata:/var/lib/postgresql/data
 

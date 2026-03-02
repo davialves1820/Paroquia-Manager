@@ -10,7 +10,12 @@ export default class extends BaseSchema {
   async down() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.integer('class_id').unsigned().references('id').inTable('catechism_classes').onDelete('CASCADE')
+      table
+        .integer('class_id')
+        .unsigned()
+        .references('id')
+        .inTable('catechism_classes')
+        .onDelete('CASCADE')
       table.integer('member_id').unsigned().references('id').inTable('members').onDelete('CASCADE')
       table.timestamp('enrolled_at')
       table.timestamp('created_at')
