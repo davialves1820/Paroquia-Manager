@@ -1,14 +1,2 @@
 import { configApp } from '@adonisjs/eslint-config'
-
-export default configApp({
-  rules: {
-    '@typescript-eslint/naming-convention': [
-      'error',
-      {
-        selector: 'variable',
-        format: ['camelCase', 'UPPER_CASE', 'PascalCase'],
-        leadingUnderscore: 'allow',
-      },
-    ],
-  },
-})
+export default configApp()
