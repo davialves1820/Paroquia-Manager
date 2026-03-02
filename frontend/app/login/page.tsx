@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
+import axios from 'axios';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -19,10 +20,16 @@ export default function LoginPage() {
         try {
             const response = await api.post('/auth/login', { email, password });
             localStorage.setItem('token', response.data.token.token);
-            console.log(response);
             router.push('/catequese');
-        } catch (err: any) {
-            setError(err.response?.data?.message || 'Erro ao fazer login. Verifique suas credenciais.');
+        } catch (err: unknown) {
+            if (axios.isAxiosError(err)) {
+                setError(
+                    err.response?.data?.message ??
+                    'Erro ao fazer login.'
+                );
+            } else {
+                setError('Erro inesperado.');
+            }
         } finally {
             setLoading(false);
         }
