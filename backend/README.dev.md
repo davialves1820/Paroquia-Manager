@@ -19,6 +19,10 @@ Este é o backend do sistema, construído com **AdonisJS 6** e **PostgreSQL**.
 2.  **Variáveis de Ambiente:**
     Copie o arquivo `.env.example` (se existir) para `.env` e configure suas credenciais do banco de dados:
 
+```bash
+    cp .env.example .env
+```
+
     ```env
     PORT=3333
     HOST=localhost
@@ -44,22 +48,97 @@ Este é o backend do sistema, construído com **AdonisJS 6** e **PostgreSQL**.
     npm run dev
     ```
 
-## 📜 Scripts Disponíveis
+------------------------------------------------------------------------
 
-- `npm run dev`: Inicia o servidor em modo desenvolvimento.
-- `npm run build`: Compila o projeto para produção.
-- `npm run start`: Inicia o servidor compilado.
-- `npm run lint`: Executa a verificação do linter.
-- `npm run format`: Formata o código usando Prettier.
-- `npm run typecheck`: Executa a checagem de tipos do TypeScript.
-
-## 🏗️ Arquitetura
-
-- **App/Models**: Definições das entidades do banco (Lucid ORM).
-- **App/Controllers**: Lógica de entrada/saída das requências HTTP.
-- **App/Services**: Camada de negócio (onde a mágica acontece).
-- **Database/Migrations**: Histórico de alterações estruturais do banco.
 
 ## 📚 Documentação da API
 
 Utilizamos o `adonis-autoswagger` para gerar a documentação em tempo real. Com o servidor rodando, acesse `/docs` no navegador.
+
+------------------------------------------------------------------------
+
+## 🧪 Qualidade de Código
+
+O projeto possui **Quality Gate automático**.
+
+Antes de qualquer merge, o GitHub executa:
+
+-   ✅ Lint
+-   ✅ Formatação
+-   ✅ Type Check
+-   ✅ Build
+
+Caso alguma etapa falhe, o merge é bloqueado.
+
+------------------------------------------------------------------------
+
+## 🔄 Workflow de Desenvolvimento
+
+### Estratégia de Branches
+
+  Branch       Descrição
+  ------------ -----------------------
+  main         Produção
+  develop      Integração
+  feature/\*   Novas funcionalidades
+  fix/\*       Correções
+
+------------------------------------------------------------------------
+
+### Fluxo recomendado
+
+``` bash
+git checkout develop
+git pull
+git checkout -b feature/nova-feature
+```
+
+Após desenvolvimento:
+
+``` bash
+npm run format
+npm run lint
+npm run typecheck
+npm run build
+```
+
+Abra um Pull Request para `develop`.
+
+------------------------------------------------------------------------
+
+## 📜 Scripts Disponíveis
+
+  Script              Descrição
+  ------------------- -----------------------------
+  npm run dev         Ambiente de desenvolvimento
+  npm run build       Build produção
+  npm run start       Executa build
+  npm run lint        Verifica código
+  npm run format      Formata código
+  npm run typecheck   Verifica tipos
+
+------------------------------------------------------------------------
+
+## ✅ Padrões de Código
+
+Este projeto utiliza:
+
+-   ESLint (configuração oficial AdonisJS)
+-   Prettier
+-   TypeScript Strict Mode
+
+Correção automática:
+
+``` bash
+npm run format
+npm run lint -- --fix
+```
+
+------------------------------------------------------------------------
+
+## 🤝 Contribuição
+
+1.  Fork o projeto
+2.  Crie uma branch (`feature/minha-feature`)
+3.  Commit suas alterações
+4.  Abra um Pull Request
