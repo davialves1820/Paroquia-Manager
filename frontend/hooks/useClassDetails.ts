@@ -50,7 +50,7 @@ export const useClassDetails = (id: string) => {
     }, [id, selectedDate]);
 
     useEffect(() => {
-        fetchData();
+        fetchData(!!classData);
         setCurrentPage(1);
     }, [fetchData]);
 
