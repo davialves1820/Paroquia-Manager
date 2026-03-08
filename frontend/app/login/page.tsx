@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
 import axios from 'axios';
@@ -10,18 +10,26 @@ export default function LoginPage() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showSlowMessage, setShowSlowMessage] = useState(false);
     const router = useRouter();
 
-    const handleLogin = async (e: React.FormEvent) => {
+    const handleLogin = async (e: FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setError('');
+        setShowSlowMessage(false);
+
+        const timer = setTimeout(() => {
+            setShowSlowMessage(true);
+        }, 3000);
 
         try {
             const response = await api.post('/auth/login', { email, password });
+            clearTimeout(timer);
             localStorage.setItem('token', response.data.token.token);
             router.push('/catequese');
         } catch (err: unknown) {
+            clearTimeout(timer);
             if (axios.isAxiosError(err)) {
                 setError(
                     err.response?.data?.message ??
@@ -32,6 +40,7 @@ export default function LoginPage() {
             }
         } finally {
             setLoading(false);
+            setShowSlowMessage(false);
         }
     };
 
@@ -94,6 +103,14 @@ export default function LoginPage() {
                             {loading ? 'Entrando...' : 'Entrar'}
                         </button>
                     </div>
+
+                    {showSlowMessage && (
+                        <div className="text-center animate-pulse">
+                            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                                Preparando o ambiente... O login será efetuado em breve.
+                            </p>
+                        </div>
+                    )}
                 </form>
             </div>
         </div>
